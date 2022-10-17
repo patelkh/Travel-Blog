@@ -11,6 +11,7 @@ var indexRouter = require('./routes/index');
 const bodyParser = require('body-parser');
 
 
+
 var app = express();
 
 //mongoose setup 
@@ -27,7 +28,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(__dirname));
 app.use(bodyParser.json());
 
 app.use('/', indexRouter);

@@ -6,3 +6,59 @@ body {
 a {
   color: #00B7FF;
 }
+
+input {
+  margin-bottom: 25px;
+}
+center {
+  margin-bottom: 50px;
+}
+
+table {
+  border: 1px solid darkgrey
+}
+
+.table-row {
+
+  border: 1px solid darkgray
+}
+
+.table-row.top{
+  background-color: darkblue;
+  color: white
+}
+
+td {
+  padding-left: 5px;
+  padding-right: 25px;
+  height: 25px
+}
+.table-data {
+  width: auto;
+  border: 1px solid darkgray;
+}
+
+.table-data.top {
+  font-weight: bold;
+}
+
+form {
+  margin-bottom: 25px;
+}
+
+.button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button {
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.other-actions {
+  display: flex;
+}

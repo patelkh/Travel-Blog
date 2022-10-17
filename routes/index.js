@@ -18,6 +18,8 @@ router.get('/blog/:id', blogController.blog_detail);
 //delete
 router.get('/blog/delete/:id', blogController.delete_blog);
 
+//manage
+router.get('/blogs/manage', blogController.manage_blogs);
 
 
 module.exports = router;

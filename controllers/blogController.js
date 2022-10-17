@@ -2,7 +2,10 @@
 
 const Blog = require('../models/blog');
 const Comment = require('../models/comment');
-const async = require('async')
+const async = require('async');
+const { render } = require('ejs');
+const moment = require('moment');
+const mongoose = require('mongoose')
 
 exports.view_blogs = (req, res, next) => {
     //use with ejs view
@@ -60,5 +63,15 @@ exports.delete_blog = (req, res, next) => {
         res.json({
             message: "Deleted"
         })
+    })
+}
+
+exports.manage_blogs = (req, res, next) => {
+    Blog.find().sort({date:1}).exec((err, results)=>{
+        res.render("manage", {
+            id: mongoose.Types.ObjectId(results.id), 
+            date: moment(results.date).format("YYYY-MM-DD"),
+            blogs: results})
+
     })
 }

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog</title>
+    <link rel="stylesheet" href="../public/stylesheets/style.css">
+</head>
+<body>
+    <center>
+        <h4>USE THIS ENDPOINT TO MANAGE THE BLOG API</h4>
+        <form action="/blog/create" method="get"></button>
+            <div class="button-container">
+                <button type="submit">Add Blog
+                <button type="submit" formaction="/">View API</button>
+            </div>
+            
+        </form>
+    </center>
+    <center>
+        <table>
+            <thead class="table-header">
+                <tr class="table-row top">
+                    <td class="table-data top">Date</td>
+                    <td class="table-data top">Author</td>
+                    <td class="table-data top">Title</td>
+                    <td class="table-data top">Description</td>
+                    <td class="table-data top">Location</td>
+                    <td class="table-data top">Delete</td>
+                </tr>
+                <tbody> 
+                    <% blogs.forEach(blog => { %>
+                        <tr class="table-row">
+                            <td class="table-data"><%= date %></td>
+                            <td class="table-data"><%= blog.author %></td>
+                            <td class="table-data"><%= blog.title %></td>
+                            <td class="table-data"><%= blog.description %></td>
+                            <td class="table-data"><%= blog.location %></td>
+                            <td class="table-data"><form action="/blog/delete/<%= id %>" method="get">
+                                <button type="submit">Delete</button>
+                            </form></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </thead>
+        </table>
+    </center> 
+</body>
+</html>
