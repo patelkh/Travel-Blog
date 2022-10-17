@@ -7,6 +7,19 @@
   <title>Blog</title>
 </head>
 <body>
-  
+    <form action="/blog/create" method="post">
+      <label style="display: block" for="title">Title: </label>
+      <input style="display: block" type="text" name="title">
+      <label style="display: block" for="desc">Description: </label>
+      <input style="display: block" type="text" name="desc">
+      <label style="display: block" for="date">Date: </label>
+      <input style="display: block" type="date" name="date">
+      <label style="display: block" for="location">Location: </label>
+      <input style="display: block" type="text" name="location">
+      <label style="display: block" for="author">Author: </label>
+      <input style="display: block" type="text" name="author">
+      <label style="display: block" for="comment">Comment: </label>
+      <button style="display: block" type="submit">Add</button>
+    </form>
 </body>
 </html>

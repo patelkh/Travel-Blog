@@ -7,20 +7,17 @@ const donenv = require('dotenv').config();
 const multer = require('multer');
 const upload = multer({dest: 'uploads/'});
 const mongoose = require('mongoose');
-
-
-
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const bodyParser = require('body-parser');
+
 
 var app = express();
 
-//connect to mongoDB
-const mongoDB = process.env.MONGODB_URI || process.env.db_uri
+//mongoose setup 
+const mongoDB = process.env.db_uri
 mongoose.connect(mongoDB, { useUnifiedTopology: true, useNewUrlParser: true });
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "mongo connection error"));
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -31,9 +28,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.json());
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -50,5 +47,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+app.listen(3000, ()=> console.log('Listening on port 3000'))
 
 module.exports = app;

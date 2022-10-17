@@ -9,6 +9,7 @@ const BlogSchema = new Schema({
     title: {type: String, required: true},
     location: {type: String},
     description: {type: String},
+    publish: {type: Boolean},
     comment: {type: Schema.Types.ObjectId, ref:"Comment"}
 })
 
