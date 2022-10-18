@@ -74,13 +74,6 @@ exports.edit_blog_post = (req, res, next) => {
     })
 }
 
-exports.blog_detail = (req, res, next) => {
-    Blog.findById(req.params.id, (err, blog) => {
-        if(err) return res.json(err)
-        res.json(blog)
-    } )
-}
-
 exports.delete_blog = (req, res, next) => {
     console.log(req.params.id)
     Blog.findByIdAndRemove({_id: req.params.id}, (err) => {
@@ -92,10 +85,43 @@ exports.delete_blog = (req, res, next) => {
     })
 }
 
+exports.blog_detail = (req, res, next) => {
+    Blog.findById(req.params.id, (err, blog) => {
+        if(err) return res.json(err)
+        res.json(blog)
+    } )
+}
+
 exports.manage_blogs = (req, res, next) => {
     Blog.find().sort({date:1}).exec((err, results)=>{
         res.render("manage", { 
             date: moment(results.date).format("YYYY-MM-DD"),
             blogs: results})
+    })
+}
+
+exports.add_comment_get = (req, res, next) => {
+    console.log(`Adding a comment on blog: ${req.params.id}`)
+    Blog.findById(req.params.id).exec((err, doc) => {
+        res.render("comment", {blog: doc})
+    })
+}
+
+exports.add_comment_post = (req, res, next) => {
+    console.log(req.body)
+    const comment = new Comment({
+        fname: req.body.fname,
+        lname: req.body.lname,
+        comment: req.body.comment,
+        blogId: mongoose.Types.ObjectId(req.body.blog_id)
+    }).save((err) => {
+        res.redirect("/blogs/manage")
+    })
+}
+
+exports.view_comments = (req, res, next) => {
+    console.log(req.params.id)
+    Comment.find({blogID: mongoose.Types.ObjectId(req.params.id)}).sort('-_id').exec((err, results) => {
+        res.json(results)
     })
 }

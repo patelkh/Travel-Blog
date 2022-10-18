@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog</title>
+</head>
+<body>
+    <h1>Add Comment</h1>
+    <form action="/blog/comment" method="post">
+        <label for="blog_id"></label>
+        <input name="blog_id" type="hidden" value="<%= blog._id %>">
+        <label for="author">Author:</label>
+        <input style="display: block; margin-bottom: 10px" type="text" disabled name="author" value="<%= blog.author %>">
+        <label for="location">Location: </label>
+        <input style="display: block; margin-bottom: 10px" type="text" disabled name="location" value="<%= blog.location %>">
+        <label for="title">Title:</label>
+        <input style="display: block; margin-bottom: 10px" type="text" disabled name="title" value="<%= blog.title %>">
+        <label for="desc">Description: </label>
+        <textarea disabled style="display: block; margin-bottom: 10px; height:100px; width:400px" name="desc" id="desc" cols="1" rows="10"><%= blog.description %></textarea>
+        <label for="fname">First Name: </label>
+        <input style="margin-bottom: 10px" type="text" name="fname">
+        <label for="lname">Last Name: </label>
+        <input style="margin-bottom: 10px" type="text" name="lname">
+        <textarea style="display: block; margin-bottom: 10px; height:100px; width:550px" name="comment" id="desc" cols="1" rows="10"></textarea>
+        <button type="submit">Save</button>
+    </form>
+</body>
+</html>

@@ -50,6 +50,12 @@ form {
   margin-bottom: 25px;
 }
 
+textarea {
+  height: 100px;
+  width: 400px;
+  margin-bottom: 25px;
+}
+
 .button-container {
   display: flex;
   align-items: center;
