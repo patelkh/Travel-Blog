@@ -10,10 +10,9 @@ const BlogSchema = new Schema({
     location: {type: String},
     description: {type: String},
     publish: {type: Boolean},
-    comment: {type: Schema.Types.ObjectId, ref:"Comment"}
 })
 
 //compile schema
 let Blog = mongoose.model('Blog', BlogSchema)
 
-module.exports = mongoose.model("Blog", BlogSchema)
+module.exports = Blog

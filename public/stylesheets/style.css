@@ -7,6 +7,10 @@ a {
   color: #00B7FF;
 }
 
+input, label {
+  display: block;
+}
+
 input {
   margin-bottom: 25px;
 }

@@ -5,7 +5,9 @@ const Comment = require('../models/comment');
 const async = require('async');
 const { render } = require('ejs');
 const moment = require('moment');
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const blog = require('../models/blog');
+const { json } = require('body-parser');
 
 exports.view_blogs = (req, res, next) => {
     //use with ejs view
@@ -40,11 +42,35 @@ exports.create_blog = (req, res, next) => {
         date: req.body.date,
         location: req.body.location,
         author: req.body.author,
-        comments: req.body.comment
-    }).save((err) => {
+        publish: true
+    }).save((err, doc) => {
         if(err) return res.json(err)
-        let blog = req.body
-        res.json(blog)
+        res.redirect("/blogs/manage")
+    })
+}
+
+exports.edit_blog_get = (req, res, next) => {
+    console.log(`req.params.id: ${req.params.id}`)
+    // let id = mongoose.Types.ObjectId(req.params.id)
+    Blog.findById(req.params.id).exec((err, doc) => {
+        //console.log(`date: ${moment(doc.date).format("YYYY-MM-DD")}`)
+        res.render("editBlog", {
+            blog: doc, 
+            date: moment(doc.date).format("YYYY-MM-DD")})
+    })
+}
+
+exports.edit_blog_post = (req, res, next) => {
+    // console.log(`updating: ${req.body.blog_id}`)
+    Blog.findByIdAndUpdate(req.body.blog_id, {
+        title: req.body.title,
+        description: req.body.desc,
+        date: req.body.date,
+        location: req.body.location,
+        author: req.body.author
+    }, (err, doc) => {
+        // console.log(`updated blog: ${doc}`)
+        res.redirect('/blogs/manage')
     })
 }
 
@@ -57,21 +83,19 @@ exports.blog_detail = (req, res, next) => {
 
 exports.delete_blog = (req, res, next) => {
     console.log(req.params.id)
-    Blog.findByIdAndRemove(req.params.id, (err) => {
+    Blog.findByIdAndRemove({_id: req.params.id}, (err) => {
         if(err) return res.json(err)
-        // res.redirect("/")
-        res.json({
-            message: "Deleted"
-        })
+        res.redirect("/blogs/manage")
+        // res.json({
+        //     message: "Deleted"
+        // })
     })
 }
 
 exports.manage_blogs = (req, res, next) => {
     Blog.find().sort({date:1}).exec((err, results)=>{
-        res.render("manage", {
-            id: mongoose.Types.ObjectId(results.id), 
+        res.render("manage", { 
             date: moment(results.date).format("YYYY-MM-DD"),
             blogs: results})
-
     })
 }

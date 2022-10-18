@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" href="../public/stylesheets/style.css">
+    <title>Blog</title>
+</head>
+<body>
+    <h1>Edit Blog</h1>
+    <div>
+        <form action="/blog/update/<%= blog._id %>" method="post">
+            <div style="display: block">
+                <label for="blog_id"></label>
+                <input name="blog_id" type="hidden" value="<%= blog._id %>">
+                <label style="display: block" for="title">Title: </label>
+                <input style="display: block; margin-bottom: 10px"type="text" name="title" value="<%= blog.title %>">
+                <label style="display: block"for="desc">Description: </label>
+                <textarea style="display: block; margin-bottom: 10px; height:100px; width: 400px" name="desc" rows="10" cols="1"><%= blog.description %></textarea>
+                <label style="display: block"for="date">Date: </label>
+                <input style="display: block; margin-bottom: 10px"type="date" name="date" value="<%= date %>">
+                <label style="display: block"for="location">Location: </label>
+                <input style="display: block; margin-bottom: 10px"type="text" name="location" value="<%= blog.location %>">
+                <label style="display: block"for="author">Author: </label>
+                <input style="display: block; margin-bottom: 10px"type="text" name="author" value="<%= blog.author %>">
+                <button style="display: block; margin-bottom: 10px"type="submit">Save</button>
+            </div>
+          </form>
+          <div style="display:flex"class="other-actions">
+            <form style="margin-right: 10px" action="/" method="get">
+              <button type="submit">View API</button>
+            </form>
+            <form action="/blogs/manage" method="get">
+              <button type="submit">Manage</button>
+            </form>
+    </div>
+</body>
+</html>

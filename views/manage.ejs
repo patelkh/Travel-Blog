@@ -15,7 +15,6 @@
                 <button type="submit">Add Blog
                 <button type="submit" formaction="/">View API</button>
             </div>
-            
         </form>
     </center>
     <center>
@@ -27,7 +26,9 @@
                     <td class="table-data top">Title</td>
                     <td class="table-data top">Description</td>
                     <td class="table-data top">Location</td>
+                    <td class="table-data top">Comment</td>
                     <td class="table-data top">Delete</td>
+                    <td class="table-data top">Edit</td>
                 </tr>
                 <tbody> 
                     <% blogs.forEach(blog => { %>
@@ -37,8 +38,12 @@
                             <td class="table-data"><%= blog.title %></td>
                             <td class="table-data"><%= blog.description %></td>
                             <td class="table-data"><%= blog.location %></td>
-                            <td class="table-data"><form action="/blog/delete/<%= id %>" method="get">
+                            <td class="table-data"></td>
+                            <td class="table-data"><form action="/blog/delete/<%= blog._id %>" method="get">
                                 <button type="submit">Delete</button>
+                            </form></td>
+                            <td class="table-data"><form action="/blog/update/<%= blog._id %>" method="get">
+                                <button type="submit">Edit</button>
                             </form></td>
                         </tr>
                     <% }) %>

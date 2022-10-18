@@ -12,8 +12,8 @@ router.post('/blog/create', blogController.create_blog);
 router.get('/blog/:id', blogController.blog_detail);
 
 //update
-// router.get('/blog/update/:id')
-// router.post('/blog/update/:id')
+router.get('/blog/update/:id', blogController.edit_blog_get);
+router.post('/blog/update/:id', blogController.edit_blog_post);
 
 //delete
 router.get('/blog/delete/:id', blogController.delete_blog);
