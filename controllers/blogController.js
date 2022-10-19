@@ -8,6 +8,7 @@ const moment = require('moment');
 const mongoose = require('mongoose');
 const blog = require('../models/blog');
 const { json } = require('body-parser');
+const fs = require('fs');
 
 exports.view_blogs = (req, res, next) => {
     //use with ejs view
@@ -35,6 +36,13 @@ exports.create_blog = (req, res, next) => {
     //     res.render("index")
     // })
 
+    // let imageUploadObject = {
+    //     image: {
+    //         data: req.file.buffer,
+    //         contentType: req.file.mimetype
+    //     }
+    // }
+    
     //use as api
     const blog = new Blog({
         title: req.body.title,
@@ -42,7 +50,12 @@ exports.create_blog = (req, res, next) => {
         date: req.body.date,
         location: req.body.location,
         author: req.body.author,
-        publish: true
+        publish: true,
+        blogImage: {
+            data: fs.readFileSync(path.join(__dirname + '/uploads' + req.file.filename)),
+            contentType: 'image/png'
+        }
+        
     }).save((err, doc) => {
         if(err) return res.json(err)
         res.redirect("/blogs/manage")

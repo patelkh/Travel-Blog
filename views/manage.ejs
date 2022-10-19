@@ -23,6 +23,7 @@
                 <tr class="table-row top">
                     <td class="table-data top">Date</td>
                     <td class="table-data top">Author</td>
+                    <td class="table-data top">Image</td>
                     <td class="table-data top">Title</td>
                     <td class="table-data top">Description</td>
                     <td class="table-data top">Location</td>
@@ -35,6 +36,7 @@
                         <tr class="table-row">
                             <td class="table-data"><%= date %></td>
                             <td class="table-data"><%= blog.author %></td>
+                            <td class="table-data"><img style="height: 100px; width: 150px" src="data:blog/<%= blog.blogImage.contentType%>;base64,<%= blog.blogImage.data.toString('base64')%>"></td>
                             <td class="table-data"><%= blog.title %></td>
                             <td class="table-data"><%= blog.description %></td>
                             <td class="table-data"><%= blog.location %></td>

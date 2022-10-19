@@ -4,13 +4,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const donenv = require('dotenv').config();
-const multer = require('multer');
-const upload = multer({dest: 'uploads/'});
 const mongoose = require('mongoose');
 var indexRouter = require('./routes/index');
 const bodyParser = require('body-parser');
-
-
 
 var app = express();
 
@@ -30,13 +26,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(__dirname));
 app.use(bodyParser.json());
+app.use('/uploads', express.static('uploads'))
 
 app.use('/', indexRouter);
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
 
 // error handler
 app.use(function(err, req, res, next) {

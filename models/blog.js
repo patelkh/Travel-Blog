@@ -10,6 +10,10 @@ const BlogSchema = new Schema({
     location: {type: String},
     description: {type: String},
     publish: {type: Boolean},
+    blogImage: {
+        data: Buffer,
+        contentType: String
+    }
 })
 
 //compile schema
