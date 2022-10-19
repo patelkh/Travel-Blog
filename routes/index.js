@@ -2,7 +2,9 @@ var express = require('express');
 var router = express.Router();
 var blogController = require('../controllers/blogController');
 
-router.get('/', blogController.view_blogs);
+// router.get('/', blogController.view_blogs);
+router.get('/', function(req, res) {res.redirect("/blogs/manage")});
+router.get('/blogs/view', blogController.view_blogs)
 
 //create blog
 router.get('/blog/create', function(req, res) {res.render("index")});
