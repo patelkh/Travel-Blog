@@ -15,7 +15,7 @@ const bodyParser = require('body-parser');
 var app = express();
 
 //mongoose setup 
-const mongoDB = process.env.db_uri
+const mongoDB = process.env.db_uri || process.env.MONGODB_URI
 mongoose.connect(mongoDB, { useUnifiedTopology: true, useNewUrlParser: true });
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "mongo connection error"));
