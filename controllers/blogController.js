@@ -17,7 +17,7 @@ exports.view_blogs = (req, res, next) => {
     // })
 
     //use as api
-    Blog.find().exec((err,results)=>{
+    Blog.find().select('_id date author title location description publish').exec((err,results)=>{
         res.json(results)
     })
 }
