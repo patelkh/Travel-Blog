@@ -24,7 +24,15 @@
         <label for="lname">Last Name: </label>
         <input style="margin-bottom: 10px" type="text" name="lname">
         <textarea style="display: block; margin-bottom: 10px; height:100px; width:550px" name="comment" id="desc" cols="1" rows="10"></textarea>
-        <button type="submit">Save</button>
+        <button style="margin-bottom: 10px" type="submit">Save</button>
     </form>
+    <div style="display:flex"class="other-actions">
+        <form style="margin-right: 10px" action="/" method="get">
+          <button type="submit">View API</button>
+        </form>
+        <form action="/blogs/manage" method="get">
+          <button type="submit">Cancel</button>
+        </form>
+      </div>
 </body>
 </html>
