@@ -1,3 +1,3 @@
 # Travel-Blog-API
 
-Travel Blog API: https://kays-travel-blog-api.herokuapp.com/blogs/manage
+(Preferred browser: Firefox) Follow the link to view/manage my travel blog API: https://kays-travel-blog-api.herokuapp.com/blogs/manage
