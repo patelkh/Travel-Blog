@@ -7,6 +7,7 @@ const donenv = require('dotenv').config();
 const mongoose = require('mongoose');
 var indexRouter = require('./routes/index');
 const bodyParser = require('body-parser');
+var cors = require('cors')
 
 var app = express();
 
@@ -24,6 +25,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(cors())
 app.use(express.static(__dirname));
 app.use(bodyParser.json());
 app.use('/uploads', express.static('uploads'))
