@@ -134,7 +134,7 @@ exports.add_comment_post = (req, res, next) => {
 
 exports.view_comments = (req, res, next) => {
     console.log(req.params.id)
-    Comment.find({blogID: mongoose.Types.ObjectId(req.params.id)}).sort('-_id').exec((err, results) => {
+    Comment.find({blogId: mongoose.Types.ObjectId(req.params.id)}).sort('-_id').exec((err, results) => {
         res.json(results)
     })
 }
