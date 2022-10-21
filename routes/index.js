@@ -48,7 +48,7 @@ router.get('/blogs/manage', blogController.manage_blogs);
 
 //create comment
 router.get('/blog/comment/:id', blogController.add_comment_get);
-router.post('/blog/comment', blogController.add_comment_post);
+router.post('/blog/comment/:id', blogController.add_comment_post);
 
 //delete comment
 
