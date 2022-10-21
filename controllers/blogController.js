@@ -11,12 +11,7 @@ const { json } = require('body-parser');
 const fs = require('fs');
 
 exports.view_blogs = (req, res, next) => {
-    //use with ejs view
-    // Blog.find().exec((err, results) => {
-    //     res.render("blogs", {blogs: results})
-    // })
-
-    //use as api
+    //API
     Blog.find().select('_id date author title location description publish').exec((err,results)=>{
         res.json(results)
     })
@@ -99,6 +94,7 @@ exports.delete_blog = (req, res, next) => {
 }
 
 exports.blog_detail = (req, res, next) => {
+    //API
     Blog.findById(req.params.id, (err, blog) => {
         if(err) return res.json(err)
         res.json(blog)
@@ -122,17 +118,29 @@ exports.add_comment_get = (req, res, next) => {
 
 exports.add_comment_post = (req, res, next) => {
     console.log(req.body)
+    // ejs
+    // const comment = new Comment({
+    //     fname: req.body.fname,
+    //     lname: req.body.lname,
+    //     comment: req.body.comment,
+    //     blogId: mongoose.Types.ObjectId(req.body.blog_id)
+    // }).save((err) => {
+    //     res.redirect("/blogs/manage")
+    // })
+    //API
     const comment = new Comment({
         fname: req.body.fname,
         lname: req.body.lname,
         comment: req.body.comment,
         blogId: mongoose.Types.ObjectId(req.body.blog_id)
     }).save((err) => {
-        res.redirect("/blogs/manage")
+        res.json({message: "Success"})
     })
+
 }
 
 exports.view_comments = (req, res, next) => {
+    //API
     console.log(req.params.id)
     Comment.find({blogId: mongoose.Types.ObjectId(req.params.id)}).sort('-_id').exec((err, results) => {
         res.json(results)
