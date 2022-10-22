@@ -13,7 +13,6 @@ Sample data: <br>
 
 # Travel Blog Frontend - Next.js<br>
 * **View frontend App:** https://kays-travel-blog.herokuapp.com<br><br>
-**Demo:** <br>![New Project-3](https://user-images.githubusercontent.com/76967126/197350529-3f1df508-4055-4112-b773-23addcbacb48.gif)<br><br>
 <img width="600" alt="Screen Shot" src="https://user-images.githubusercontent.com/76967126/197347627-1ddb093c-5a00-4bd3-af70-3497c1ac444a.png"><br><br>
 **Link to Github Repo:** https://github.com/patelkh/Travel-Blog-Client <br><br>
 
