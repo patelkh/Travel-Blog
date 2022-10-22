@@ -16,7 +16,7 @@ Sample data: <br>
 <img width="600" alt="Screen Shot" src="https://user-images.githubusercontent.com/76967126/197347627-1ddb093c-5a00-4bd3-af70-3497c1ac444a.png"><br><br>
 **Link to Github Repo:** https://github.com/patelkh/Travel-Blog-Client <br><br>
 **Demo:** <br>
-(https://user-images.githubusercontent.com/76967126/197348453-ddd96702-6f33-45d5-a60b-697feafec046.mp4)<br><br>
+![New Project-2](https://user-images.githubusercontent.com/76967126/197350301-bdadfefc-976a-460f-9715-86d0c37deeec.gif)<br><br>
 
 # Travel Blog Frontend CMS - TypeScript<br>
 * **View frontend CMS App:** In progress...<br>
