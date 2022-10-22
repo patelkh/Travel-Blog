@@ -1,5 +1,6 @@
 # Travel-Blog-API
 
-(Preferred browser: Firefox) Follow the link to view/manage my travel blog API: 
-* View: https://kays-travel-blog-api.herokuapp.com/blogs/view
-* Manage: https://kays-travel-blog-api.herokuapp.com/blogs/manage
+Follow the link to view my travel blog API: 
+* View API: https://kays-travel-blog-api.herokuapp.com/blogs/view
+* View Front-end App: https://kays-travel-blog.herokuapp.com
+* View Front-end CMS App: In progress...
