@@ -12,10 +12,13 @@ Sample data: <br>
 }<br>
 
 # Travel Blog Front End - Next.js<br>
+<br>
 * **View frontend App:** https://kays-travel-blog.herokuapp.com<br>
 <img width="600" alt="Screen Shot 2022-10-22 at 8 13 05 AM" src="https://user-images.githubusercontent.com/76967126/197347627-1ddb093c-5a00-4bd3-af70-3497c1ac444a.png"><br>
+<br>
 Link to Github Repo: https://github.com/patelkh/Travel-Blog-Client <br>
+<br>
 Demo: <br>
-https://user-images.githubusercontent.com/76967126/197347320-a8c1f02b-8d39-414d-986f-9cd1dc5debc0.mp4<br>
+Uploading 2AA6F8A2-4A17-44F0-B6CB-1BB278563E44 2.mp4…<br>
 
 * **View frontend CMS App:** In progress...<br>
