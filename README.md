@@ -17,5 +17,6 @@ Sample data: <br>
 **Link to Github Repo:** https://github.com/patelkh/Travel-Blog-Client <br><br>
 
 
-# Travel Blog Frontend CMS - TypeScript<br>
+# Travel Blog Frontend CMS - React.js<br>
 * **View frontend CMS App:** In progress...<br>
+* **Link to Github Repo:** https://github.com/patelkh/Travel-Blog-Client-CMS<br><br>
