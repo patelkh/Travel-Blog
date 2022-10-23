@@ -1,4 +1,4 @@
-# Travel Blog Backend API - MongoDB, Node.js, and Express.js
+# Travel Blog Backend API - MongoDB, Node.js & Express.js
 
 * **View backend API:** https://kays-travel-blog-api.herokuapp.com/blogs/view <br>
 Sample data: <br>
