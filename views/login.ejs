@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog</title>
+    <link type="css" rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <h1>Login Up</h1>
+    <div class="form-container" style="display:flex">
+        <form action="/login" method="post">
+            <label for="username">Username: </label>
+            <input required type="text" name="username">
+            <label for="password">Password: </label>
+            <input required type="text" name="password">
+            <button type="submit">Login</button>
+        </form>
+        <form action="/">
+            <button style="margin-left: 5px;"type="submit">Cancel</button>
+        </form>
+    </div>
+    <div>
+        <% if(message) { %>
+            <p style="color: red"><%= message %></p>
+        <%} %>
+    </div>    
+</body>
+</html>

@@ -4,17 +4,15 @@ const Blog = require("../models/blog");
 const Comment = require("../models/comment");
 const User = require("../models/user");
 const async = require("async");
-const { render } = require("ejs");
 const moment = require("moment");
 const mongoose = require("mongoose");
 const blog = require("../models/blog");
-const { json } = require("body-parser");
 const fs = require("fs");
 const bcrypt = require("bcryptjs");
 
 exports.sign_up = (req, res, next) => {
-  console.log(req.body);
   User.findOne({ username: req.body.username }, (error, user) => {
+    if(error) return next()
     if (user) {
       console.log(`User ${user.username} already exists`);
       res.render("signup", {
@@ -40,6 +38,30 @@ exports.sign_up = (req, res, next) => {
     }
   });
 };
+
+exports.login = (req, res, next) => {
+  User.findOne({username: req.body.username}, (error, user) => {
+    if(error) return next()
+    if(!user) {
+      res.render("login", {
+        message: 'Invalid username'
+      })
+    } else {
+      bcrypt.compare(req.body.password, user.password, (err, isMatch) => {
+        if(err) {
+          return next()
+        } else if(!isMatch) {
+          res.render("login", {
+            message: 'Invalid password'
+          })
+        } else {
+          res.render("/blogs/manage")
+        }
+      })
+    
+    }
+  })
+}
 
 exports.view_blogs = (req, res, next) => {
   //API

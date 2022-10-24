@@ -13,8 +13,15 @@ router.get('/signup', function(req, res) {
         message: ''
     })
 })
-
 router.post('/signup', blogController.sign_up)
+
+router.get('/login', function(req, res) {
+    res.render("login", {
+        message: ''
+    })
+})
+
+router.post('/login', blogController.login)
 
 // router.get('/', blogController.view_blogs);
 router.get('/', function(req, res) {res.redirect("/blogs/manage")});
