@@ -57,7 +57,7 @@ exports.login = (req, res, next) => {
             message: 'Invalid password'
           })
         } else {
-          res.render("/blogs/manage")
+          res.redirect("/blogs/manage")
         }
       })
     

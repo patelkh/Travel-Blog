@@ -38,8 +38,12 @@ td {
   height: 25px
 }
 .table-data {
-  width: auto;
+  /* width: auto; */
   border: 1px solid darkgray;
+}
+
+.table-data.desc {
+  width: 600px;
 }
 
 .table-data.top {

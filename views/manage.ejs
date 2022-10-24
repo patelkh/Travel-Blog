@@ -38,7 +38,7 @@
                             <td class="table-data"><%= blog.author %></td>
                             <td class="table-data"><img style="height: 100px; width: 150px" src="data:blog/<%= blog.blogImage.contentType%>;base64,<%= blog.blogImage.data.toString('base64')%>"></td>
                             <td class="table-data"><%= blog.title %></td>
-                            <td class="table-data"><%= blog.description %></td>
+                            <td class="table-data desc"><%= blog.description %></td>
                             <td class="table-data"><%= blog.location %></td>
                             <td class="table-data"><form action="/blog/update/<%= blog._id %>" method="get">
                                 <button type="submit">Edit</button>
