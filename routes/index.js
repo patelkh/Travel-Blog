@@ -7,6 +7,15 @@ const multer = require('../models/upload');
 const fs = require('fs');
 const path = require('path')
 
+
+router.get('/signup', function(req, res) {
+    res.render("signup", {
+        message: ''
+    })
+})
+
+router.post('/signup', blogController.sign_up)
+
 // router.get('/', blogController.view_blogs);
 router.get('/', function(req, res) {res.redirect("/blogs/manage")});
 router.get('/blogs/view', blogController.view_blogs)
