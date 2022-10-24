@@ -9,7 +9,9 @@ const mongoose = require("mongoose");
 const blog = require("../models/blog");
 const fs = require("fs");
 const bcrypt = require("bcryptjs");
+const jwt = require('jsonwebtoken')
 
+//Signup not supported through CMS
 exports.sign_up = (req, res, next) => {
   User.findOne({ username: req.body.username }, (error, user) => {
     if(error) return next()
@@ -61,6 +63,60 @@ exports.login = (req, res, next) => {
     
     }
   })
+}
+
+//CMS Login
+exports.api_login = (req, res, next) => {
+  User.findOne({username: req.body.username}, (error, user) => {
+    if(error) return next()
+    if(!user) {
+      return res.json({message: 'Invalid user'})
+    } else {
+      bcrypt.compare(req.body.password, user.password, (err, isMatch) => {
+        if(err) {
+          return next()
+        } else if (!isMatch) {
+          return res.json({message: 'Invalid Password'})
+        } else {
+          jwt.sign({user}, process.env.secret, (err, token) => {
+            res.json({
+              token
+            })
+          })        
+        }
+      })
+    }
+  })
+}
+
+
+//CMS GET BLOGS
+exports.api_view_blogs = (req, res, next) => {
+  jwt.verify(req.token, process.env.secret, (err, authData) => {
+    if(err) {
+      res.sendStatus(403)
+    }else {
+      res.json(authData)
+    }
+  })
+
+}
+
+//JWT Middleware 
+exports.verifyToken = (req, res, next) => {
+  //Get auth header value
+  const bearerHeader = req.headers['authorization']
+  //Check if bearer is undefined
+  if(typeof bearerHeader != "undefined") {
+    //Split at the space
+    const bearer = bearerHeader.split(' ')
+    //Get Token from array
+    const bearerToken = bearer[1]
+    req.token = bearerToken
+    next();
+  } else {
+    res.sendStatus(403)
+  }
 }
 
 exports.view_blogs = (req, res, next) => {

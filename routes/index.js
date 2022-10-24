@@ -5,8 +5,7 @@ const upload = require('../models/upload');
 const Blog = require('../models/blog');
 const multer = require('../models/upload');
 const fs = require('fs');
-const path = require('path')
-
+const path = require('path');
 
 router.get('/signup', function(req, res) {
     res.render("signup", {
@@ -15,6 +14,7 @@ router.get('/signup', function(req, res) {
 })
 router.post('/signup', blogController.sign_up)
 
+
 router.get('/login', function(req, res) {
     res.render("login", {
         message: ''
@@ -22,6 +22,13 @@ router.get('/login', function(req, res) {
 })
 
 router.post('/login', blogController.login)
+//api
+router.post('/api/login', blogController.api_login)
+
+
+router.post('/api/blogs', blogController.verifyToken, blogController.api_view_blogs)
+
+//
 
 // router.get('/', blogController.view_blogs);
 router.get('/', function(req, res) {res.redirect("/blogs/manage")});
