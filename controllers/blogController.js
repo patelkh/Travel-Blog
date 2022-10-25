@@ -67,14 +67,15 @@ exports.login = (req, res, next) => {
 
 //CMS Login
 exports.api_login = (req, res, next) => {
+  console.log(req.body)
   User.findOne({username: req.body.username}, (error, user) => {
-    if(error) return next()
+    if(error) return next(error)
     if(!user) {
       return res.json({message: 'Invalid user'})
     } else {
       bcrypt.compare(req.body.password, user.password, (err, isMatch) => {
         if(err) {
-          return next()
+          return next(err)
         } else if (!isMatch) {
           return res.json({message: 'Invalid Password'})
         } else {
