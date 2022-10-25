@@ -1,24 +1,185 @@
-//Scope: Create, read and delete posts
-
 const Blog = require("../models/blog");
 const Comment = require("../models/comment");
 const User = require("../models/user");
-const async = require("async");
 const moment = require("moment");
 const mongoose = require("mongoose");
-const blog = require("../models/blog");
 const fs = require("fs");
 const bcrypt = require("bcryptjs");
-const jwt = require('jsonwebtoken')
+const jwt = require("jsonwebtoken");
 
-//Signup not supported through CMS
+//CMS Login
+exports.api_login = (req, res, next) => {
+  // console.log(`req.body: ${req.body}`);
+  User.findOne({ username: req.body.username }, (error, user) => {
+    if (error) {
+      res.sendStatus(500);
+    } else if (!user) {
+      return res.json({ message: "Invalid user" });
+    } else {
+      bcrypt.compare(req.body.password, user.password, (err, isMatch) => {
+        if (err) {
+          return next(err);
+        } else if (!isMatch) {
+          return res.json({ message: "Invalid Password" });
+        } else {
+          jwt.sign({ user }, process.env.secret, (err, token) => {
+            res.json({
+              token,
+              message: "Success",
+            });
+          });
+        }
+      });
+    }
+  });
+};
+
+//CMS GET BLOGS
+exports.api_view_blogs = (req, res, next) => {
+  jwt.verify(req.token, process.env.secret, (err) => {
+    if (err) {
+      res.sendStatus(403);
+    } else {
+      Blog.find()
+        .select("_id date author title location description publish")
+        .exec((err, results) => {
+          if(err) {
+            res.sendStatus(500)
+          } else {
+            res.json(results)
+          }
+        });
+    }
+  });
+};
+
+//CMS CREATE A BLOG
+
+//CMS EDIT A BLOG
+exports.api_update_blog = (req, res, next) => {
+  jwt.verify(req.token, process.env.secret, (err) => {
+    if (err) {
+      res.sendStatus(403);
+    } else {
+      Blog.findByIdAndUpdate(
+        req.body.blog_id,
+        {
+          title: req.body.title,
+          description: req.body.desc,
+          date: req.body.date,
+          location: req.body.location,
+          author: req.body.author,
+        },
+        (err) => {
+          if (err) {
+            res.sendStatus(500);
+          } else {
+            res.sendStatus(200);
+          }
+        }
+      );
+    }
+  });
+};
+
+//CMS DELETE A BLOG
+exports.api_delete_blog = (req, res, next) => {
+  jwt.verify(req.token, process.env.secret, (err) => {
+    if (err) {
+      res.sendStatus(403);
+    } else {
+      Blog.findByIdAndRemove({ _id: req.body.blog_id }, (err) => {
+        if (err) {
+          res.sendStatus(500);
+        } else {
+          res.sendStatus(200);
+        }
+      });
+    }
+  });
+};
+
+//JWT Middleware
+exports.verifyToken = (req, res, next) => {
+  //Get auth header value
+  const bearerHeader = req.headers["authorization"];
+  //Check if bearer is undefined
+  if (typeof bearerHeader != "undefined") {
+    //Split at the space
+    const bearer = bearerHeader.split(" ");
+    //Get Token from array
+    const bearerToken = bearer[1];
+    req.token = bearerToken;
+    next();
+  } else {
+    res.sendStatus(403);
+  }
+};
+
+
+//----------------------------------------------------------------------//
+//Client System View Blogs
+exports.view_blogs = (req, res, next) => {
+  Blog.find()
+    .select("_id date author title location description publish")
+    .exec((err, results) => {
+      res.json(results);
+    });
+};
+
+//Client System View Blog
+exports.blog_detail = (req, res, next) => {
+  //API
+  Blog.findById(req.params.id, (err, blog) => {
+    if (err) return res.json(err);
+    res.json(blog);
+  });
+};
+
+//Client System View Blog Comments
+exports.view_comments = (req, res, next) => {
+  //API
+  console.log(req.params.id);
+  Comment.find({ blogId: mongoose.Types.ObjectId(req.params.id) })
+    .sort("-_id")
+    .exec((err, results) => {
+      res.json(results);
+    });
+};
+
+//Client System Add Blog Comment 
+exports.add_comment_post = (req, res, next) => {
+  console.log(req.body);
+  // ejs
+  // const comment = new Comment({
+  //     fname: req.body.fname,
+  //     lname: req.body.lname,
+  //     comment: req.body.comment,
+  //     blogId: mongoose.Types.ObjectId(req.body.blog_id)
+  // }).save((err) => {
+  //     res.redirect("/blogs/manage")
+  // })
+  //API
+  const comment = new Comment({
+    fname: req.body.fname,
+    lname: req.body.lname,
+    comment: req.body.comment,
+    blogId: mongoose.Types.ObjectId(req.body.blog_id),
+  }).save((err) => {
+    res.json({ message: "Success" });
+  });
+};
+
+//----------------------------------------------------------------------//
+//Additional Frontend Support
 exports.sign_up = (req, res, next) => {
   User.findOne({ username: req.body.username }, (error, user) => {
-    if(error) return next()
-    if (user) {
+    if(error) {
+      next()
+    } else if(user) {
       console.log(`User ${user.username} already exists`);
       res.render("signup", {
-        message: 'User already exists!',
+        message: "User already exists!",
       });
     } else {
       bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
@@ -42,132 +203,38 @@ exports.sign_up = (req, res, next) => {
 };
 
 exports.login = (req, res, next) => {
-  User.findOne({username: req.body.username}, (error, user) => {
-    if(error) return next()
-    if(!user) {
+  User.findOne({ username: req.body.username }, (error, user) => {
+    if(error){
+      return next(error)
+    } else if(!user) {
       res.render("login", {
-        message: 'Invalid username'
-      })
+        message: "Invalid username",
+      });
     } else {
       bcrypt.compare(req.body.password, user.password, (err, isMatch) => {
-        if(err) {
-          return next()
-        } else if(!isMatch) {
-          res.render("login", {
-            message: 'Invalid password'
-          })
-        } else {
-          res.redirect("/blogs/manage")
-        }
-      })
-    
-    }
-  })
-}
-
-//CMS Login
-exports.api_login = (req, res, next) => {
-  console.log(req.body)
-  User.findOne({username: req.body.username}, (error, user) => {
-    if(error) return next(error)
-    if(!user) {
-      return res.json({message: 'Invalid user'})
-    } else {
-      bcrypt.compare(req.body.password, user.password, (err, isMatch) => {
-        if(err) {
-          return next(err)
+        if (err) {
+          return next();
         } else if (!isMatch) {
-          return res.json({message: 'Invalid Password'})
+          res.render("login", {
+            message: "Invalid password",
+          });
         } else {
-          jwt.sign({user}, process.env.secret, (err, token) => {
-            res.json({
-              token
-            })
-          })        
+          res.redirect("/blogs/manage");
         }
-      })
+      });
     }
-  })
-}
-
-
-//CMS GET BLOGS
-exports.api_view_blogs = (req, res, next) => {
-  jwt.verify(req.token, process.env.secret, (err, authData) => {
-    if(err) {
-      res.sendStatus(403)
-    }else {
-      res.json(authData)
-    }
-  })
-
-}
-
-//JWT Middleware 
-exports.verifyToken = (req, res, next) => {
-  //Get auth header value
-  const bearerHeader = req.headers['authorization']
-  //Check if bearer is undefined
-  if(typeof bearerHeader != "undefined") {
-    //Split at the space
-    const bearer = bearerHeader.split(' ')
-    //Get Token from array
-    const bearerToken = bearer[1]
-    req.token = bearerToken
-    next();
-  } else {
-    res.sendStatus(403)
-  }
-}
-
-exports.view_blogs = (req, res, next) => {
-  //API
-  Blog.find()
-    .select("_id date author title location description publish")
-    .exec((err, results) => {
-      res.json(results);
-    });
+  });
 };
 
-exports.create_blog = (req, res, next) => {
-  //use with ejs view
-  // const blog = new Blog({
-  //     title: req.body.title,
-  //     description: req.body.desc,
-  //     date: req.body.date,
-  //     location: req.body.location,
-  //     author: req.body.author,
-  //     comments: req.body.comment
-  // }).save((err)=> {
-  //     if(err) return res.json(err)
-  //     res.render("index")
-  // })
-
-  // let imageUploadObject = {
-  //     image: {
-  //         data: req.file.buffer,
-  //         contentType: req.file.mimetype
-  //     }
-  // }
-
-  //use as api
-  const blog = new Blog({
-    title: req.body.title,
-    description: req.body.desc,
-    date: req.body.date,
-    location: req.body.location,
-    author: req.body.author,
-    publish: true,
-    blogImage: {
-      data: fs.readFileSync(
-        path.join(__dirname + "/uploads" + req.file.filename)
-      ),
-      contentType: "image/png",
-    },
-  }).save((err, doc) => {
-    if (err) return res.json(err);
-    res.redirect("/blogs/manage");
-  });
+exports.manage_blogs = (req, res, next) => {
+  Blog.find()
+    .sort({ date: 1 })
+    .exec((err, results) => {
+      res.render("manage", {
+        date: moment(results.date).format("YYYY-MM-DD"),
+        blogs: results,
+      });
+    });
 };
 
 exports.edit_blog_get = (req, res, next) => {
@@ -211,25 +278,6 @@ exports.delete_blog = (req, res, next) => {
   });
 };
 
-exports.blog_detail = (req, res, next) => {
-  //API
-  Blog.findById(req.params.id, (err, blog) => {
-    if (err) return res.json(err);
-    res.json(blog);
-  });
-};
-
-exports.manage_blogs = (req, res, next) => {
-  Blog.find()
-    .sort({ date: 1 })
-    .exec((err, results) => {
-      res.render("manage", {
-        date: moment(results.date).format("YYYY-MM-DD"),
-        blogs: results,
-      });
-    });
-};
-
 exports.add_comment_get = (req, res, next) => {
   console.log(`Adding a comment on blog: ${req.params.id}`);
   Blog.findById(req.params.id).exec((err, doc) => {
@@ -237,34 +285,7 @@ exports.add_comment_get = (req, res, next) => {
   });
 };
 
-exports.add_comment_post = (req, res, next) => {
-  console.log(req.body);
-  // ejs
-  // const comment = new Comment({
-  //     fname: req.body.fname,
-  //     lname: req.body.lname,
-  //     comment: req.body.comment,
-  //     blogId: mongoose.Types.ObjectId(req.body.blog_id)
-  // }).save((err) => {
-  //     res.redirect("/blogs/manage")
-  // })
-  //API
-  const comment = new Comment({
-    fname: req.body.fname,
-    lname: req.body.lname,
-    comment: req.body.comment,
-    blogId: mongoose.Types.ObjectId(req.body.blog_id),
-  }).save((err) => {
-    res.json({ message: "Success" });
-  });
-};
 
-exports.view_comments = (req, res, next) => {
-  //API
-  console.log(req.params.id);
-  Comment.find({ blogId: mongoose.Types.ObjectId(req.params.id) })
-    .sort("-_id")
-    .exec((err, results) => {
-      res.json(results);
-    });
-};
+
+
+
