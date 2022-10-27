@@ -113,10 +113,13 @@ router.post("/blog/create", load.single("image"), (req, res, next) => {
     if (err) {
       res.sendStatus(505);
     } else {
-      res.sendStatus(200);
+      res.redirect('/blogs/manage');
     }
   });
 });
+
+//manage blogs
+router.get("/blogs/manage", blogController.manage_blogs);
 
 //update blog
 router.get("/blog/update/:id", blogController.edit_blog_get);
@@ -125,10 +128,7 @@ router.post("/blog/update/:id", blogController.edit_blog_post);
 //delete blog
 router.get("/blog/delete/:id", blogController.delete_blog);
 
-//manage blogs
-router.get("/blogs/manage", blogController.manage_blogs);
-
-//create comment
+//read comment
 router.get("/blog/comment/:id", blogController.add_comment_get);
 
 //delete comment
