@@ -1,7 +1,6 @@
 var express = require("express");
 var router = express.Router();
 var blogController = require("../controllers/blogController");
-const upload = require("../models/upload");
 const Blog = require("../models/blog");
 const fs = require("fs");
 
