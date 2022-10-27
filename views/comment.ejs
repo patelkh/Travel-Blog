@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>Add Comment</h1>
-    <form action="/blog/comment" method="post">
+    <form action="/blog/comment/<%= blog._id %>" method="post">
         <label for="blog_id"></label>
         <input name="blog_id" type="hidden" value="<%= blog._id %>">
         <label for="author">Author:</label>

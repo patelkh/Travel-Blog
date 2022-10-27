@@ -272,7 +272,6 @@ exports.delete_blog = (req, res, next) => {
 };
 
 exports.add_comment_get = (req, res, next) => {
-  console.log(`Adding a comment on blog: ${req.params.id}`);
   Blog.findById(req.params.id).exec((err, doc) => {
     res.render("comment", { blog: doc });
   });
