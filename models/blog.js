@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const Comment = require('./comment')
 
 const BlogSchema = new Schema({
     date: {type: Date},
@@ -16,7 +15,6 @@ const BlogSchema = new Schema({
     }
 })
 
-//compile schema
 let Blog = mongoose.model('Blog', BlogSchema)
 
 module.exports = Blog

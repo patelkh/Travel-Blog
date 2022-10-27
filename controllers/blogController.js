@@ -3,11 +3,10 @@ const Comment = require("../models/comment");
 const User = require("../models/user");
 const moment = require("moment");
 const mongoose = require("mongoose");
-const fs = require("fs");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-//CMS Login
+//CMS LOGIN
 exports.api_login = (req, res, next) => {
   // console.log(`req.body: ${req.body}`);
   User.findOne({ username: req.body.username }, (error, user) => {
@@ -52,8 +51,6 @@ exports.api_view_blogs = (req, res, next) => {
     }
   });
 };
-
-//CMS CREATE A BLOG
 
 //CMS EDIT A BLOG
 exports.api_update_blog = (req, res, next) => {
@@ -155,16 +152,6 @@ exports.view_comments = (req, res, next) => {
 //Client System Add Blog Comment 
 exports.add_comment_post = (req, res, next) => {
   console.log(req.body);
-  // ejs
-  // const comment = new Comment({
-  //     fname: req.body.fname,
-  //     lname: req.body.lname,
-  //     comment: req.body.comment,
-  //     blogId: mongoose.Types.ObjectId(req.body.blog_id)
-  // }).save((err) => {
-  //     res.redirect("/blogs/manage")
-  // })
-  //API
   const comment = new Comment({
     fname: req.body.fname,
     lname: req.body.lname,
@@ -174,6 +161,7 @@ exports.add_comment_post = (req, res, next) => {
     res.json({ message: "Success" });
   });
 };
+
 
 //----------------------------------------------------------------------//
 //Additional Frontend Support
