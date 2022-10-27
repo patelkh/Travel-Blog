@@ -7,6 +7,9 @@ const multer = require("../models/upload");
 const fs = require("fs");
 const path = require("path");
 
+const m = require('multer')
+const load = m({dest: "./uploads"})
+
 //Protected Routes for Content Management System (CMS)
 router.post("/api/login", blogController.api_login);
 router.post(
@@ -65,8 +68,32 @@ router.get("/", function (req, res) {
 //create blog
 router.get("/create", function (req, res) {res.render("index")});
 
-router.post("/blog/create", multer.upload.single("image"), (req, res, next) => {
-  console.log(req.file);
+router.post('/api/blog/create', (req, res, next) => {
+  console.log(req)
+  res.sendStatus(200)
+  // const blog = new Blog({
+  //   title: req.body.title,
+  //   description: req.body.desc,
+  //   date: req.body.date,
+  //   location: req.body.location,
+  //   author: req.body.author,
+  //   publish: true,
+  //   blogImage: {
+  //     data: fs.readFileSync(req.file.path),
+  //     contentType: "image/png",
+  //   },
+  // }).save((err, doc) => {
+  //   if(err) {
+  //     res.sendStatus(500)
+  //   } else {
+  //     res.sendStatus(200)
+  //   }
+  // });
+})
+
+router.post("/blog/create", load.single('image'), (req, res, next) => {
+  // console.log(req.body)
+  // res.sendStatus(200)
   const blog = new Blog({
     title: req.body.title,
     description: req.body.desc,
@@ -79,8 +106,11 @@ router.post("/blog/create", multer.upload.single("image"), (req, res, next) => {
       contentType: "image/png",
     },
   }).save((err, doc) => {
-    if (err) return res.json(err);
-    res.redirect("/blogs/manage");
+    if(err) {
+      res.sendStatus(505)
+    } else {
+      res.sendStatus(200)
+    }
   });
 });
 
