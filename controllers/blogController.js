@@ -74,6 +74,7 @@ exports.api_update_blog = (req, res, next) => {
           if (err) {
             res.sendStatus(500);
           } else {
+            console.log("updated")
             res.sendStatus(200);
           }
         }
@@ -86,12 +87,15 @@ exports.api_update_blog = (req, res, next) => {
 exports.api_delete_blog = (req, res, next) => {
   jwt.verify(req.token, process.env.secret, (err) => {
     if (err) {
+      console.log('error in token')
       res.sendStatus(403);
     } else {
-      Blog.findByIdAndRemove({ _id: req.body.blog_id }, (err) => {
+      Blog.findByIdAndRemove(req.body.blog_id, (err) => {
         if (err) {
           res.sendStatus(500);
+          console.log('error in finding record')
         } else {
+          console.log('deleted successfully')
           res.sendStatus(200);
         }
       });
@@ -112,6 +116,7 @@ exports.verifyToken = (req, res, next) => {
     req.token = bearerToken;
     next();
   } else {
+    console.log('error in passing token')
     res.sendStatus(403);
   }
 };

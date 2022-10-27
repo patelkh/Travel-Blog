@@ -3,6 +3,7 @@ const multer = require('multer');
 //defines where the file will be uploaded and what will be the file name
 const storage = multer.diskStorage({
     destination: function(req, file, callback) {
+        // console.log(`file: ${file}`)
         callback(null, './uploads');
     },
     filename: function(req, file, callback) {
