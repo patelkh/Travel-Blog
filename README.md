@@ -18,5 +18,5 @@ Sample data: <br>
 
 
 # Travel Blog Frontend CMS - React.js<br>
-* **View frontend CMS App:** In progress...<br>
+* **View frontend CMS App:** https://kays-travel-blog-cms.herokuapp.com<br>
 * **Link to Github Repo:** https://github.com/patelkh/Travel-Blog-Client-CMS<br><br>
