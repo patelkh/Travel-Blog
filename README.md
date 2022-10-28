@@ -19,4 +19,5 @@ Sample data: <br>
 
 # Travel Blog Frontend CMS - React.js<br>
 * **View frontend CMS App:** https://kays-travel-blog-cms.herokuapp.com<br>
+<img width="737" alt="Screen Shot 2022-10-28 at 7 22 27 AM" src="https://user-images.githubusercontent.com/76967126/198643494-5ef7a251-c0fc-46fe-87ed-c23a19ee0b4b.png"><br><br>
 * **Link to Github Repo:** https://github.com/patelkh/Travel-Blog-Client-CMS<br><br>
